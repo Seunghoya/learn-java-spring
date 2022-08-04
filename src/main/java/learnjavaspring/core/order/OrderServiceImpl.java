@@ -9,13 +9,22 @@ import learnjavaspring.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
     /*
     * 할인 정책이 변경될 때 DIP 원칙이 지켜지지 않는다.
     * OrderServiceImpl는 OrderService를 의존하고 있으면서 동시에 DiscountPolicy를 함께 의존하고 있다.
     * 의존성 문제를 해결하기 위해서 관심사 분리를 적용해야 한다. */
+
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
