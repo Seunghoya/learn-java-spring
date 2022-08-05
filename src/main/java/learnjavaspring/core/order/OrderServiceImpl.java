@@ -1,5 +1,6 @@
 package learnjavaspring.core.order;
 
+import learnjavaspring.core.annotation.MainDiscountPolicy;
 import learnjavaspring.core.discount.DiscountPolicy;
 import learnjavaspring.core.discount.FixDiscountPolicy;
 import learnjavaspring.core.discount.RateDiscountPolicy;
@@ -7,10 +8,12 @@ import learnjavaspring.core.member.Member;
 import learnjavaspring.core.member.MemberRepository;
 import learnjavaspring.core.member.MemberServiceImpl;
 import learnjavaspring.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+//@RequiredArgsConstructor    // Lombok 적용
 public class OrderServiceImpl implements OrderService{
 
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -24,9 +27,9 @@ public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
-
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//    Lombok 적용
+//    @Autowired // 생성자가 하나만 있으면 생략 가능
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
