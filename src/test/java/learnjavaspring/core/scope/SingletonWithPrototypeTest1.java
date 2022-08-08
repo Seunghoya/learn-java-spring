@@ -1,6 +1,7 @@
 package learnjavaspring.core.scope;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -53,12 +54,22 @@ public class SingletonWithPrototypeTest1 {
         public ClientBean(PrototypeBean prototypeBean) {
             this.prototypeBean = prototypeBean;
         }
-
         public int logic() {
             prototypeBean.addCount();
             int count = prototypeBean.getCount();
             return count;
         }
+
+        // ObjectProvider를 사용해 문제 해결
+//        @Autowired
+//        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+//
+//        public int logic() {
+//            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+//            prototypeBean.addCount();
+//            int count = prototypeBean.getCount();
+//            return count;
+//        }
 
     }
     @Scope("prototype")
